@@ -55,7 +55,7 @@ const Register = () => {
           required
           onChange={handleChange}
         />
-        <button>Register</button>
+        <button type="submit">Register</button>
         <span>
           Already have an account? <Link to="/login">Login</Link>
         </span>

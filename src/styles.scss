@@ -49,8 +49,6 @@ $darkPink: #f95959;
         font-size: 16px;
       }
 
-      
-
       span {
         font-size: 18px;
         color: $lightGray;
@@ -59,6 +57,19 @@ $darkPink: #f95959;
           color: $lightBlue;
         }
       }
+    }
+  }
+
+  //Logout
+  .logout{
+    button {
+      padding: 10px;
+      border: none;
+      background-color: $lightBlue;
+      cursor: pointer;
+      color: white;
+      border-radius: 5px;
+      font-size: 16px;
     }
   }
 
@@ -89,10 +100,6 @@ $darkPink: #f95959;
         a {
           color: white;
           text-decoration: none;
-        }
-
-        a:hover {
-          color: $lightBlue;
         }
 
         display: flex;
@@ -299,7 +306,7 @@ $darkPink: #f95959;
   }
 
   // Create Blog
-  .heading{
+  .heading {
     font-size: 3rem;
     text-align: center;
     margin-top: 3rem;
@@ -312,7 +319,7 @@ $darkPink: #f95959;
     margin: auto;
     margin-top: 6rem;
 
-    h2{
+    h2 {
       margin-bottom: 0.5rem;
     }
 
@@ -322,17 +329,17 @@ $darkPink: #f95959;
       flex-direction: column;
       gap: 20px;
 
-      input{
+      input {
         padding: 10px;
         border: 1px solid $darkGray;
       }
 
-      .editorContainer{
+      .editorContainer {
         height: 400px;
         overflow: scroll;
         border: 1px solid $darkGray;
 
-        .editor{
+        .editor {
           height: 100%;
           border: none;
         }
@@ -345,7 +352,7 @@ $darkPink: #f95959;
       flex-direction: column;
       gap: 20px;
 
-      .item{
+      .item {
         border: 1px solid $darkGray;
         padding: 1.2rem;
         flex: 1;
@@ -355,11 +362,11 @@ $darkPink: #f95959;
         font-size: 18px;
         color: $darkGray;
 
-        h2{
+        h2 {
           font-size: 1.2rem;
         }
 
-        .file{
+        .file {
           width: max-content;
           padding: 0.6rem;
           border: 1px solid $darkGray;
@@ -367,10 +374,10 @@ $darkPink: #f95959;
           margin: 20px 0;
         }
 
-        .buttons{
+        .buttons {
           display: flex;
           justify-content: space-between;
-          
+
           button {
             width: max-content;
             padding: 10px 20px;
@@ -383,7 +390,7 @@ $darkPink: #f95959;
           }
         }
 
-        .cat{
+        .cat {
           display: flex;
           align-items: center;
           gap: 20px;

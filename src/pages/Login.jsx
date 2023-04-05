@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { AuthContext } from "../context/AuthContextProvider";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -7,6 +9,8 @@ const Login = () => {
     password: "",
   });
   const navigate = useNavigate();
+
+  const { login } = useContext(AuthContext);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -16,12 +20,12 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:4000/auth/login", formData);
+      await login(formData);
       toast.success("Login successful!");
       navigate("/");
     } catch (err) {
       // console.log(err.response.data);
-      toast.error("Login failed, please try again!");
+      toast.error("Login failed, wrong credentials!");
     }
   };
 
@@ -43,7 +47,7 @@ const Login = () => {
           name="password"
           onChange={handleChange}
         />
-        <button>Login</button>
+        <button type="submit">Login</button>
         <span>
           Don't have an account? <Link to="/register">Register</Link>
         </span>
