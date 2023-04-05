@@ -62,7 +62,7 @@ function App() {
   return (
     <div className="app">
       <RouterProvider router={router} />
-      <ToastContainer autoClose={2500} position="top-center" />
+      <ToastContainer autoClose={2000} position="top-center" />
     </div>
   );
 }

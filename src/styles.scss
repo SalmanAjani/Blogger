@@ -61,15 +61,30 @@ $darkPink: #f95959;
   }
 
   //Logout
-  .logout{
-    button {
-      padding: 10px;
-      border: none;
-      background-color: $lightBlue;
-      cursor: pointer;
-      color: white;
-      border-radius: 5px;
-      font-size: 16px;
+  .logout {
+    h1 {
+      text-align: center;
+      margin: 2rem 0;
+      color: $darkPink;
+    }
+
+    .container {
+      width: 30%;
+      margin: auto;
+      display: flex;
+      justify-content: space-evenly;
+      gap: 20px;
+
+      button {
+        width: max-content;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+        background-color: $lightBlue;
+        border: 1px solid $lightBlue;
+        color: white;
+        font-size: 1.2rem;
+      }
     }
   }
 

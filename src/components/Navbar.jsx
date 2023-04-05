@@ -8,7 +8,6 @@ const Navbar = () => {
 
   const handleLogout = () => {
     logout();
-    toast.success("Logout successful!");
     navigate("/logout");
   };
 
