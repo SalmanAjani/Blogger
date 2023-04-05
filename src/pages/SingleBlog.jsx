@@ -1,62 +1,70 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Menu from "../components/Menu";
+import axios from "axios";
+import moment from "moment";
+import { AuthContext } from "../context/AuthContextProvider";
 
 const SingleBlog = () => {
+  const [blog, setBlog] = useState({});
+  const { currentUser } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  // console.log(blog.username);
+  // console.log(currentUser.username);
+
+  const location = useLocation();
+  const blogId = location.pathname.split("/")[2]; // blog id is at index 2 in the url localhost:4000/blogs/:id
+
+  const fetchBlog = async () => {
+    try {
+      const res = await axios.get(`http://localhost:4000/blogs/${blogId}`);
+      setBlog(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchBlog();
+  }, [blogId]);
+
+  const handleDelete = async () => {
+    try {
+      await axios
+        .delete(`http://localhost:4000/blogs/${blogId}`, {
+          headers: {
+            Authorization: localStorage.getItem("access_token"),
+          },
+        })
+        .then((res) => console.log(res.data));
+      // navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="single">
       <div className="content">
-        <img
-          src="https://images.pexels.com/photos/776656/pexels-photo-776656.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-          alt="blogimage"
-        />
+        <img src={blog?.img} alt="blogimage" />
         <div className="user">
-          <img
-            src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-            alt="userimage"
-          />
+          {blog.userImg && <img src={blog.userImg} alt="userimage" />}
           <div className="info">
-            <span>John</span>
-            <p>Posted 2 days ago</p>
+            <span>{blog.username}</span>
+            <p>Posted {moment(blog.date).fromNow()}</p>
           </div>
-          <div className="edit">
-            <Link to={`/create?edit=2`}>
-              <button>Edit</button>
-            </Link>
-            <button>Delete</button>
-          </div>
+          {currentUser?.username === blog.username && (
+            <div className="edit">
+              <Link to={`/create?edit=2`}>
+                <button>Edit</button>
+              </Link>
+              <button onClick={handleDelete}>Delete</button>
+            </div>
+          )}
         </div>
-        <h1>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h1>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam
-          molestiae, iure quaerat nobis qui veritatis, fugit rem facilis
-          voluptatibus nesciunt numquam, recusandae enim exercitationem
-          dignissimos. Nostrum, at. Sit, ad dignissimos.
-          <br />
-          <br />
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam
-          molestiae, iure quaerat nobis qui veritatis, fugit rem facilis
-          voluptatibus nesciunt numquam, recusandae enim exercitationem
-          dignissimos. Nostrum, at. Sit, ad dignissimos.
-          <br />
-          <br />
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam
-          molestiae, iure quaerat nobis qui veritatis, fugit rem facilis
-          voluptatibus nesciunt numquam, recusandae enim exercitationem
-          dignissimos. Nostrum, at. Sit, ad dignissimos.quaerat nobis qui
-          veritatis, fugit rem facilis voluptatibus nesciunt numquam, recusandae
-          enim exercitationem dignissimos. Nostrum, at. Sit, ad dignissimos.
-          <br />
-          <br />
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam
-          molestiae, iure quaerat nobis qui veritatis, fugit rem facilis
-          voluptatibus nesciunt numquam, recusandae enim exercitationem
-          dignissimos. Nostrum, at. Sit, ad dignissimos. Lorem ipsum dolor sit
-          amet consectetur adipisicing elit. Nam molestiae, iure quaerat nobis
-          qui veritatis, fugit rem facilis voluptatibus nesciunt numquam,
-          recusandae enim exercitationem dignissimos. Nostrum, at. Sit, ad
-          dignissimos.
-        </p>
+        <h1>{blog.title}</h1>
+        {blog.desc}
       </div>
       <div className="menu">
         <Menu />
