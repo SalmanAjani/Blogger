@@ -31,45 +31,48 @@ const SingleBlog = () => {
 
   const handleDelete = async () => {
     try {
-      await axios
-        .delete(`http://localhost:4000/blogs/${blogId}`, {
-          headers: {
-            Authorization: localStorage.getItem("access_token"),
-          },
-        })
-        .then((res) => console.log(res.data));
-      // navigate("/");
+      await axios.delete(`http://localhost:4000/blogs/${blogId}`, {
+        headers: {
+          Authorization: localStorage.getItem("access_token"),
+        },
+      });
+      navigate("/");
     } catch (error) {
       console.log(error);
     }
   };
 
   return (
-    <div className="single">
-      <div className="content">
-        <img src={blog?.img} alt="blogimage" />
-        <div className="user">
-          {blog.userImg && <img src={blog.userImg} alt="userimage" />}
-          <div className="info">
-            <span>{blog.username}</span>
-            <p>Posted {moment(blog.date).fromNow()}</p>
-          </div>
-          {currentUser?.username === blog.username && (
-            <div className="edit">
-              <Link to={`/create?edit=2`}>
-                <button>Edit</button>
-              </Link>
-              <button onClick={handleDelete}>Delete</button>
+    <>
+      <Link to="/">
+        <button className="singlebtn">Go Back</button>
+      </Link>
+      <div className="single">
+        <div className="content">
+          <img src={blog?.img} alt="blogimage" />
+          <div className="user">
+            {blog.userImg && <img src={blog.userImg} alt="userimage" />}
+            <div className="info">
+              <span>{blog.username}</span>
+              <p>Posted {moment(blog.date).fromNow()}</p>
             </div>
-          )}
+            {currentUser?.username === blog.username && (
+              <div className="edit">
+                <Link to={`/create?edit=2`}>
+                  <button>Edit</button>
+                </Link>
+                <button onClick={handleDelete}>Delete</button>
+              </div>
+            )}
+          </div>
+          <h1>{blog.title}</h1>
+          {blog.desc}
         </div>
-        <h1>{blog.title}</h1>
-        {blog.desc}
+        <div className="menu">
+          <Menu category={blog.category} />
+        </div>
       </div>
-      <div className="menu">
-        <Menu />
-      </div>
-    </div>
+    </>
   );
 };
 
