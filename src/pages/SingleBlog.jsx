@@ -5,6 +5,11 @@ import axios from "axios";
 import moment from "moment";
 import { AuthContext } from "../context/AuthContextProvider";
 
+const getText = (html) => {
+  const doc = new DOMParser().parseFromString(html, "text/html");
+  return doc.body.textContent;
+};
+
 const SingleBlog = () => {
   const [blog, setBlog] = useState({});
   const { currentUser } = useContext(AuthContext);
@@ -58,7 +63,7 @@ const SingleBlog = () => {
             </div>
             {currentUser?.username === blog.username && (
               <div className="edit">
-                <Link to={`/create?edit=2`}>
+                <Link to={`/create?edit=2`} state={blog}>
                   <button>Edit</button>
                 </Link>
                 <button onClick={handleDelete}>Delete</button>
@@ -66,7 +71,7 @@ const SingleBlog = () => {
             )}
           </div>
           <h1>{blog.title}</h1>
-          {blog.desc}
+          {getText(blog.desc)}
         </div>
         <div className="menu">
           <Menu category={blog.category} />

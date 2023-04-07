@@ -431,12 +431,13 @@ $darkPink: #f95959;
           font-size: 1.2rem;
         }
 
-        .file {
-          width: max-content;
-          padding: 0.6rem;
-          border: 1px solid $darkGray;
-          cursor: pointer;
-          margin: 20px 0;
+        .imglink {
+          margin-top: 6px;
+        }
+
+        .imglink+input{
+          padding: 0.7rem;
+          margin: 14px 0;
         }
 
         .buttons {

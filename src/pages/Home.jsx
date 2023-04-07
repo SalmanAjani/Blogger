@@ -30,6 +30,11 @@ import axios from "axios";
 //   },
 // ];
 
+const getText = (html) => {
+  const doc = new DOMParser().parseFromString(html, "text/html");
+  return doc.body.textContent;
+};
+
 const Home = () => {
   const [blogs, setBlogs] = useState([]);
 
@@ -62,7 +67,7 @@ const Home = () => {
               <Link to={`/blogs/${blog.id}`}>
                 <h2>{blog.title}</h2>
               </Link>
-              <p>{blog.desc}</p>
+              <p>{getText(blog.desc)}</p>
               <Link to={`/blogs/${blog.id}`}>
                 <button>Read More</button>
               </Link>
