@@ -4,6 +4,7 @@ import Menu from "../components/Menu";
 import axios from "axios";
 import moment from "moment";
 import { AuthContext } from "../context/AuthContextProvider";
+import DOMPurify from "dompurify";
 
 const getText = (html) => {
   const doc = new DOMParser().parseFromString(html, "text/html");
@@ -71,7 +72,11 @@ const SingleBlog = () => {
             )}
           </div>
           <h1>{blog.title}</h1>
-          {getText(blog.desc)}
+          <p
+            dangerouslySetInnerHTML={{
+              __html: DOMPurify.sanitize(blog.desc),
+            }}
+          ></p>
         </div>
         <div className="menu">
           <Menu category={blog.category} />
