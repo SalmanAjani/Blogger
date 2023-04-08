@@ -16,8 +16,6 @@ const Register = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // console.log(formData);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -25,7 +23,6 @@ const Register = () => {
       toast.success("User registered successfully!");
       navigate("/login");
     } catch (err) {
-      // console.log(err.response.data);
       toast.error("User already exists!");
     }
   };

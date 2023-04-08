@@ -1,50 +1,64 @@
+import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+
 import axios from "axios";
 import moment from "moment";
-import { useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const CreateBlog = () => {
   const state = useLocation().state;
+  const navigate = useNavigate();
+
   const [title, setTitle] = useState(state?.title || "");
   const [value, setValue] = useState(state?.desc || "");
   const [blogimage, setBlogImage] = useState(state?.img || "");
   const [category, setCategory] = useState(state?.category || "");
 
+  const handleUpdate = async () => {
+    await axios.put(
+      `http://localhost:4000/blogs/${state.id}`,
+      {
+        title,
+        desc: value,
+        category,
+        img: blogimage,
+      },
+      {
+        headers: {
+          Authorization: localStorage.getItem("access_token"),
+        },
+      }
+    );
+    toast.success("Blog updated successfully!");
+    navigate("/");
+  };
+
+  const handleAdd = async () => {
+    await axios.post(
+      `http://localhost:4000/blogs/`,
+      {
+        title,
+        desc: value,
+        category,
+        img: blogimage,
+        date: moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
+      },
+      {
+        headers: {
+          Authorization: localStorage.getItem("access_token"),
+        },
+      }
+    );
+    toast.success("Blog created successfully!");
+    navigate("/");
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      state
-        ? await axios.put(
-            `http://localhost:4000/blogs/${state.id}`,
-            {
-              title,
-              desc: value,
-              category,
-              img: blogimage,
-            },
-            {
-              headers: {
-                Authorization: localStorage.getItem("access_token"),
-              },
-            }
-          )
-        : await axios.post(
-            `http://localhost:4000/blogs/`,
-            {
-              title,
-              desc: value,
-              category,
-              img: blogimage,
-              date: moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
-            },
-            {
-              headers: {
-                Authorization: localStorage.getItem("access_token"),
-              },
-            }
-          );
+      state ? handleUpdate() : handleAdd();
     } catch (error) {
       console.log(error);
     }
@@ -73,12 +87,7 @@ const CreateBlog = () => {
         <div className="menu">
           <div className="item">
             <h2>Publish</h2>
-            <span>
-              <b>Status: </b>Draft
-            </span>
-            <span>
-              <b>Visibility: </b>Public
-            </span>
+
             <label className="imglink">Blog Image Link</label>
             <input
               type="text"
@@ -87,8 +96,9 @@ const CreateBlog = () => {
               onChange={(e) => setBlogImage(e.target.value)}
             />
             <div className="buttons">
-              <button>Save as a draft</button>
-              <button onClick={handleSubmit}>Publish</button>
+              <button onClick={handleSubmit}>
+                {state ? "Update" : "Publish"}
+              </button>
             </div>
           </div>
           <div className="item">

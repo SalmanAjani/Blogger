@@ -5,22 +5,16 @@ import axios from "axios";
 import moment from "moment";
 import { AuthContext } from "../context/AuthContextProvider";
 import DOMPurify from "dompurify";
-
-const getText = (html) => {
-  const doc = new DOMParser().parseFromString(html, "text/html");
-  return doc.body.textContent;
-};
+import { toast } from "react-toastify";
 
 const SingleBlog = () => {
-  const [blog, setBlog] = useState({});
   const { currentUser } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  // console.log(blog.username);
-  // console.log(currentUser.username);
-
   const location = useLocation();
   const blogId = location.pathname.split("/")[2]; // blog id is at index 2 in the url localhost:4000/blogs/:id
+
+  const [blog, setBlog] = useState({});
 
   const fetchBlog = async () => {
     try {
@@ -42,6 +36,7 @@ const SingleBlog = () => {
           Authorization: localStorage.getItem("access_token"),
         },
       });
+      toast.success("Blog deleted successfully!");
       navigate("/");
     } catch (error) {
       console.log(error);

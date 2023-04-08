@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import { AuthContext } from "../context/AuthContextProvider";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -24,7 +24,6 @@ const Login = () => {
       toast.success("Login successful!");
       navigate("/");
     } catch (err) {
-      // console.log(err.response.data);
       toast.error("Login failed, wrong credentials!");
     }
   };
