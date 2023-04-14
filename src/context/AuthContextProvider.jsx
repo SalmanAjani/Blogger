@@ -9,13 +9,16 @@ const AuthContextProvider = ({ children }) => {
   );
 
   const login = async (formData) => {
-    const res = await axios.post("http://localhost:4000/auth/login", formData);
+    const res = await axios.post(
+      `${import.meta.env.VITE_SERVER_URL}/auth/login`,
+      formData
+    );
     setCurrentUser(res.data.userData.data);
     localStorage.setItem("access_token", res.data.userData.token);
   };
 
   const logout = async () => {
-    await axios.post("http://localhost:4000/auth/logout");
+    await axios.post(`${import.meta.env.VITE_SERVER_URL}/auth/logout`);
     setCurrentUser(null);
     localStorage.removeItem("access_token");
   };

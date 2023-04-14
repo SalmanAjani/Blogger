@@ -31,6 +31,20 @@ const Login = () => {
   return (
     <div className="auth">
       <h1>Login</h1>
+      <h2 style={{ marginBottom: "15px" }}>Test Account:-</h2>
+      <div style={{ display: "flex", gap: "15px", marginBottom: "15px" }}>
+        <div>
+          <h3>Account 1</h3>
+          <p>Username: admin1</p>
+          <p>Password: admin100</p>
+        </div>
+        <div>
+          <h3>Account 2</h3>
+          <p>Username: admin2</p>
+          <p>Password: admin200</p>
+        </div>
+      </div>
+
       <form onSubmit={handleSubmit}>
         <input
           type="text"

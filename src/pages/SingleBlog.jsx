@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 const SingleBlog = () => {
   const { currentUser } = useContext(AuthContext);
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   const location = useLocation();
   const blogId = location.pathname.split("/")[2]; // blog id is at index 2 in the url localhost:4000/blogs/:id
@@ -18,8 +19,12 @@ const SingleBlog = () => {
 
   const fetchBlog = async () => {
     try {
-      const res = await axios.get(`http://localhost:4000/blogs/${blogId}`);
+      setIsLoading(true);
+      const res = await axios.get(
+        `${import.meta.env.VITE_SERVER_URL}/blogs/${blogId}`
+      );
       setBlog(res.data);
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -29,9 +34,13 @@ const SingleBlog = () => {
     fetchBlog();
   }, [blogId]);
 
+  if (isLoading) {
+    return <h1>Loading.. Please wait, it might take a while.</h1>;
+  }
+
   const handleDelete = async () => {
     try {
-      await axios.delete(`http://localhost:4000/blogs/${blogId}`, {
+      await axios.delete(`${import.meta.env.VITE_SERVER_URL}/blogs/${blogId}`, {
         headers: {
           Authorization: localStorage.getItem("access_token"),
         },

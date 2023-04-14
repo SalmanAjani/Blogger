@@ -18,7 +18,7 @@ const CreateBlog = () => {
 
   const handleUpdate = async () => {
     await axios.put(
-      `http://localhost:4000/blogs/${state.id}`,
+      `${import.meta.env.VITE_SERVER_URL}/blogs/${state.id}`,
       {
         title,
         desc: value,
@@ -37,7 +37,7 @@ const CreateBlog = () => {
 
   const handleAdd = async () => {
     await axios.post(
-      `http://localhost:4000/blogs/`,
+      `${import.meta.env.VITE_SERVER_URL}/blogs/`,
       {
         title,
         desc: value,

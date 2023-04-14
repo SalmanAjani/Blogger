@@ -18,7 +18,7 @@ const Navbar = () => {
           <Link to="/">Blog</Link>
         </div>
         <div className="features">
-          {currentUser?.username}
+          <p>{currentUser?.username}</p>
 
           {currentUser ? (
             <button onClick={handleLogout}>Logout</button>

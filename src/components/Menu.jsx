@@ -8,7 +8,7 @@ const Menu = ({ category }) => {
   const fetchBlogs = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:4000/blogs/?category=${category}`
+        `${import.meta.env.VITE_SERVER_URL}/blogs/?category=${category}`
       );
       setBlogs(res.data);
     } catch (error) {

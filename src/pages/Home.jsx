@@ -3,19 +3,19 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 
-const getText = (html) => {
-  const doc = new DOMParser().parseFromString(html, "text/html");
-  return doc.body.textContent;
-};
-
 const Home = () => {
   const category = useLocation().search;
   const [blogs, setBlogs] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchBlogs = async () => {
     try {
-      const res = await axios.get(`http://localhost:4000/blogs${category}`);
+      setIsLoading(true);
+      const res = await axios.get(
+        `${import.meta.env.VITE_SERVER_URL}/blogs${category}`
+      );
       setBlogs(res.data);
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -24,6 +24,10 @@ const Home = () => {
   useEffect(() => {
     fetchBlogs();
   }, [category]);
+
+  if (isLoading) {
+    return <h1>Loading.. Please wait, it might take a while.</h1>;
+  }
 
   return (
     <div>
@@ -38,7 +42,6 @@ const Home = () => {
               <Link to={`/blogs/${blog.id}`}>
                 <h2>{blog.title}</h2>
               </Link>
-              <p>{getText(blog.desc)}</p>
               <Link to={`/blogs/${blog.id}`}>
                 <button>Read More</button>
               </Link>
