@@ -15,7 +15,7 @@ const Navbar = () => {
     <div className="navbar">
       <div className="container">
         <div className="logo">
-          <Link to="/">Blog</Link>
+          <Link to="/">Blogger</Link>
         </div>
         <div className="features">
           <p>{currentUser?.username}</p>
