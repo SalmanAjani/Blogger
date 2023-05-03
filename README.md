@@ -1,7 +1,7 @@
 <h1>Blogger</h1>
 
 <h2>Description</h2>
-<p>Blogger is a minimal blogging app where users can read blogs written by other users and create their own blog if they so wish.</p>
+<p>Blogger is a minimal blogging app where users can read blogs written by other users and create their own blogs if they so wish.</p>
 
 <h2>Purpose</h2>
 <p>The objective of this project is to create a blogging app where the UI is easy to navigate and CRUD operations can be performed easily as well.</p>
